@@ -7,10 +7,12 @@ class Chip8ModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
+
+
         cls.game = Chip8GameModel.objects.create(title="My Game",
                         description="This is my game.",
                         author="teh author",
-                        file = SimpleUploadedFile('mygame',content=b"haha")
+                        file = SimpleUploadedFile('mygame',content=b"a"*4096)
                     )
 
     def test_requires_title(self):
@@ -47,5 +49,12 @@ class Chip8ModelTest(TestCase):
         with self.assertRaises(ValidationError):
             self.game.full_clean()
 
+    def test_file_too_large(self):
+        self.game.file = SimpleUploadedFile(name="Immatoobig",content=b"a"*4097)
+        with self.assertRaises(ValidationError):
+            self.game.full_clean()
+
     def test_passes(self):
+        self.game.full_clean()
+        self.game.save()
         self.game.full_clean()
