@@ -54,6 +54,9 @@ class Chip8ModelTest(TestCase):
         with self.assertRaises(ValidationError):
             self.game.full_clean()
 
+    def test_has_keys_attribute(self):
+        self.assertTrue(hasattr(self.game,'keys'))
+
     def test_passes(self):
         self.game.full_clean()
         self.game.save()

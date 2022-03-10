@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MaxLengthValidator,MaxValueValidator
+from django.core.validators import MaxLengthValidator,MaxValueValidator,RegexValidator
 from .fields import Chip8FileField
 from .validators import MaxFilesizeValidator
 
@@ -18,7 +18,7 @@ class Chip8GameModel(models.Model):
     author = models.CharField(blank=True,null=True,max_length=100)
 
 
-class KeyConfig(models.Model):
+class KeyConfigModel(models.Model):
 
     '''Links chip 8 keys to physical keyboard keys using Javascript KeyboardEvent.code'''
 
@@ -27,7 +27,7 @@ class KeyConfig(models.Model):
         verbose_name_plural = "Key Configuration"
         constraints = [models.UniqueConstraint(fields=["game_id","keyboard_code"],name="unique_keyboard_key")]
     
-    game_id = models.ForeignKey(Chip8FileField,on_delete=models.CASCADE,related_name='keys')
+    game_id = models.ForeignKey(Chip8GameModel,on_delete=models.CASCADE,related_name='keys')
     chip8_key = models.PositiveSmallIntegerField(verbose_name="Chip 8 Key",validators=[MaxValueValidator(15)])
-    keyboard_code = models.CharField(verbose_name="Javascript Keyboard Code",max_length=20)
+    keyboard_code = models.CharField(verbose_name="Javascript Keyboard Code",max_length=20,validators=[RegexValidator('^[A-Z][A-Za-z]*[0-9]{0,2}$')])
 
