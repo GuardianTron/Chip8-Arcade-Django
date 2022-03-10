@@ -5,17 +5,17 @@ from .models import FileSizeValidatorInvalidFieldModel,FileSizeValidatorModel,Fi
 
 class FileSizeValidatorTests(TestCase):
 
-    def test_invalidfieldtype(self):
+    def test_invalid_field_type(self):
         test_model = FileSizeValidatorInvalidFieldModel(file="I'm not a file.")
         with self.assertRaises(TypeError):
             test_model.full_clean()
 
-    def test_validfilesize(self):
+    def test_valid_file_size(self):
         file = SimpleUploadedFile(name="Immaproperfile",content=b"a"*100)
         test_model = FileSizeValidatorModel(file=file)
         test_model.full_clean()
 
-    def test_invalidfilesize(self):
+    def test_invalid_file_size(self):
         file=SimpleUploadedFile(name="Immatoobigfile",content=b"a"*101)
         test_model = FileSizeValidatorModel(file=file)
         with self.assertRaises(ValidationError):
