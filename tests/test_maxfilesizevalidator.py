@@ -21,6 +21,15 @@ class FileSizeValidatorTests(TestCase):
         with self.assertRaises(ValidationError):
             test_model.full_clean()
 
+    def test_checks_updated_upload(self):
+        file = SimpleUploadedFile(name="I'm just right.",content=b"a"*100)
+        test_model = FileSizeValidatorModel(file=file)
+        test_model.full_clean()
+        test_model.save()
+        test_model.file = SimpleUploadedFile(name="I'mtoobig",content=b"a"*101)
+        with self.assertRaises(ValidationError):
+            test_model.full_clean()
+
     def test_no_check_saved(self):
         # File size doubles when being saved,
         # so if a check is being performed, this
