@@ -6,6 +6,10 @@ from .validators import MaxFilesizeValidator
 
 class Chip8GameModel(models.Model):
     '''Represents one chip 8 game'''
+    class Meta:
+        verbose_name = "Chip 8 Game"
+        verbose_name_plural = "Chip 8 Games"
+        
 
 
     file = Chip8FileField(blank=False,upload_to='games',validators=[MaxFilesizeValidator(4096)])
