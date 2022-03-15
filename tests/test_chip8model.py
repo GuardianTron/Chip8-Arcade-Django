@@ -57,6 +57,9 @@ class Chip8ModelTest(TestCase):
     def test_has_keys_attribute(self):
         self.assertTrue(hasattr(self.game,'keys'))
 
+    def test_has_buttons_attribute(self):
+        self.assertTrue(hasattr(self.game,'buttons'))
+
     def test_passes(self):
         self.game.full_clean()
         self.game.save()

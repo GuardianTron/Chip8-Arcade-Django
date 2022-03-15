@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from django.db import models
 from django.core.validators import MaxLengthValidator,MaxValueValidator,RegexValidator
 from .fields import Chip8FileField
@@ -31,3 +32,29 @@ class KeyConfigModel(models.Model):
     chip8_key = models.PositiveSmallIntegerField(verbose_name="Chip 8 Key",validators=[MaxValueValidator(15)])
     keyboard_code = models.CharField(verbose_name="Javascript Keyboard Code",max_length=20,validators=[RegexValidator('^[A-Z][A-Za-z]*[0-9]{0,2}$')])
 
+
+class ButtonConfigModel(models.Model):
+
+    '''Links chip 8 keys to button icons for touch controls'''
+
+    class Meta:
+        verbose_name = "Button Configuration"
+        verbose_name_plural = "Button Configuration"
+        constraints = [models.UniqueConstraint(fields=['game_id','button_id'],name="unique_button_key")]
+
+    BUTTON_CHOICES = [
+        ('dir_left','D Pad - Left'),
+        ('dir_right','D Pad - Right'),
+        ('dir_down','D Pad - Down'),
+        ('dir_up','D Pad - Up'),
+        ('button_a','A Button'),
+        ('button_b','B Button'),
+        ('button_c','C Button'),
+        ('button_x','X Button'),
+        ('button_y','Y Button'),
+        ('button_z','Z Button')
+    ]
+
+    game_id = models.ForeignKey(Chip8GameModel,on_delete=models.CASCADE,related_name="buttons")
+    chip8_key = models.PositiveBigIntegerField(verbose_name="Chip 8 Key",validators=[MaxValueValidator(15)])
+    button_id = models.CharField(verbose_name="Button Id",max_length=10, choices=BUTTON_CHOICES, default='dir_left')

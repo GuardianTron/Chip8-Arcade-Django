@@ -1,1 +1,1 @@
-from .models import Chip8GameModel, KeyConfigModel
+from .models import Chip8GameModel, KeyConfigModel, ButtonConfigModel
