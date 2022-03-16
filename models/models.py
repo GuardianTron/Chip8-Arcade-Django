@@ -18,6 +18,9 @@ class Chip8GameModel(models.Model):
     title = models.CharField(blank=False,null=False,default="Please add a title.",max_length=100)
     author = models.CharField(blank=True,null=True,max_length=100)
 
+    def __str__(self):
+        return self.title
+
 
 class AbstractConfigModel(models.Model):
     '''Acts as the base model for all configuration classes.'''
