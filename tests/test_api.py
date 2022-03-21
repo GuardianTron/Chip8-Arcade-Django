@@ -96,6 +96,12 @@ class TestAPI(APITestCase):
             self.assertTrue('keyboard_code' in key.keys())
             self.assertTrue('chip8_key' in key.keys())
 
-
+    def test_game_config_denied_methods(self):
+        id = self.game1.id
+        game_url = reverse("chip8:game_json",args=[id])
+        self.assertEquals(self.client.post(game_url,format='json').status_code,405)
+        self.assertEquals(self.client.put(game_url,format='json').status_code,405)
+        self.assertEquals(self.client.patch(game_url,format='json').status_code,405)
+        self.assertEquals(self.client.delete(game_url,format='json').status_code,405)
 
 
