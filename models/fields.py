@@ -1,5 +1,4 @@
 from django.db.models.fields.files import FieldFile,FileField
-from io import BytesIO
 
 class Chip8FieldFile(FieldFile):
 
