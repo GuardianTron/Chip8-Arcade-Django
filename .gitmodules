@@ -1,0 +1,3 @@
+[submodule "static/js/Chip-8-Emulator"]
+	path = static/js/Chip-8-Emulator
+	url = git@github.com:GuardianTron/Chip-8-Emulator.git
