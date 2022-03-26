@@ -29,7 +29,7 @@ export class SelectMenuBuilder{
     addOption = (value,text) =>{
         option = document.createElement('option');
         option.setAttribute('value',value);
-        option.appendChild(document.createTextNode('text'));
+        option.appendChild(document.createTextNode(text));
         this._menu.appendChild(option);
         this._menu.setAttribute('size',this._menu.children.length);
         
