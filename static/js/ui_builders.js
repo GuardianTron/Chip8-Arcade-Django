@@ -5,6 +5,17 @@ export class SelectMenuBuilder{
         this._menu = document.createElement('select');
         this._listeners = {};
         this._areListenersActivated = false;
+        this._menu.selectNext = function(){
+            if(this.selectedIndex < this.children.length -1){
+                this.selectedIndex++;
+            }
+        }
+
+        this._menu.selectPrevious() = function(){
+            if(this.selectedIndex > 0){
+                this.selectedIndex--;
+            }
+        }
     }
 
     addOption = (value,text) =>{
