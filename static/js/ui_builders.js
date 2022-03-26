@@ -1,7 +1,8 @@
 "use strict";
+import { StateMachine } from "./fsm";
 export class SelectMenuBuilder{
 
-    construct(){
+    constructor(){
         this._menu = document.createElement('select');
         this._listeners = {};
         this._areListenersActivated = false;
@@ -11,10 +12,17 @@ export class SelectMenuBuilder{
             }
         }
 
-        this._menu.selectPrevious() = function(){
+        this._menu.selectPrevious() = function(){   
             if(this.selectedIndex > 0){
                 this.selectedIndex--;
             }
+        }
+
+        this._menu.getSelectedId() = function(){
+            if(this.selectedIndex > -1){
+                return this.options[this.selectedIndex].value;
+            }
+            throw new Error('No id selected.');
         }
     }
 
@@ -59,3 +67,27 @@ export class SelectMenuBuilder{
 
 
 }
+
+export function createMenuButtonHandlers(menu,stateMachine){
+    if(!stateMachine instanceof StateMachine){
+        throw new TypeError('stateMachine must be an instance of StateMachine.');
+
+    }
+
+
+
+    return e =>{
+        switch(e.targe.id){
+            case 'dir_down':
+                menu.selectNext();
+                break;
+            case 'dir_up': 
+                menu.selectPrevious();
+            case 'button_start':
+                let gameId = menu.getSelectedId();
+                stateMachine.changeState('description_state',{'id':gameId});
+        }
+    };
+}
+
+

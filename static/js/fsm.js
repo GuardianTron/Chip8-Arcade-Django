@@ -1,10 +1,10 @@
 "use strict";
 
-import { SelectMenuBuilder } from "./ui_builders";
+import { SelectMenuBuilder,createMenuButtonHandlers } from "./ui_builders";
 
 export class AbstractState{
 
-    construct(stateMachine){
+    constructor(stateMachine){
         if(!stateMachine instanceof StateMachine){
             throw new TypeError('Instance of class StateMachine required.')
         }
@@ -66,7 +66,7 @@ export class StateMachine{
 
 class ApplicationState extends AbstractState{
 
-    construct(stateMachine,containingDOMElement){
+    constructor(stateMachine,containingDOMElement){
         super(stateMachine);
         this._containingDOMElement = containingDOMElement;
     }
@@ -77,25 +77,39 @@ class ApplicationState extends AbstractState{
 }
 
 class MenuState extends ApplicationState{
-    contsruct(stateMachine,containingDOMElement,menuSourceUrl){
+    constructor(stateMachine,containingDOMElement,menuSourceUrl){
         super(stateMachine,containingDOMElement);
+        this._buttonElements = [];
         this._url = menuSourceUrl;
         this._menuBuilder = null;
+        this._buttonHandler = null;
+    }
+
+    addButton = (buttonElement) =>{
+        this._buttonElements.push(buttonElement);
     }
 
     enter = async () =>{
         //fetch and build menu if not already cached
         if(!this._menuBuilder){
             this._menuBuilder = await buildMenu(this._url,SelectMenuBuilder());
+            this._buttonHandler = createMenuButtonHandlers(this._menuBuilder.getMenu(),this.stateMachine);
         }
-        this._menuBuilder.activateEventListeners();
-        this.container.appendChild(this._menuBuilder.getMenu());
+        let menu = this._menuBuilder.getMenu()
+        //wire event handlers for buttons
+        this._buttonElements.forEach(button =>{
+            button.addEventListener('click',this._buttonHandler);
+        });        
+        this.container.appendChild(menu);
 
     }
 
     exit = ()=>{
+        this._buttonElements.forEach(button =>{
+            button.removeEventListener('click',this._buttonHandler);
+        });
         this.container.removeChild(this._menuBuilder.getMenu());
-        this._menuBuilder.deactivateEventListeners();
+        
     }
 }
 
