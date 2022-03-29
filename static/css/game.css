@@ -1,7 +1,19 @@
+#game_console{
+    display: grid;
+    width: 800px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 2fr 1fr;
+    row-gap: 2rem;
+    justify-items: stretch;
+
+}
+
 #player_screen{
     width: 640px;
     aspect-ratio: 2/1;
     background-color: rgb(0, 29, 0);
+    grid-column: 1 / span 3;
+    justify-self: center;
 }
 
 #d_pad{
