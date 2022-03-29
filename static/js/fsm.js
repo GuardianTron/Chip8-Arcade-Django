@@ -1,6 +1,6 @@
 "use strict";
 
-import { SelectMenuBuilder,createMenuButtonHandlers } from "./ui_builders";
+import { SelectMenuBuilder,createMenuButtonHandlers } from "./ui_builders.js";
 
 export class AbstractState{
 
@@ -35,7 +35,7 @@ export class StateMachine{
 
     addState = (stateLabel,stateInstance)=>{
         
-        if(!stateInstance instanceof State){
+        if(!stateInstance instanceof AbstractState){
             throw new TypeError("An object of type State is required.");
         }
 
@@ -76,7 +76,7 @@ class ApplicationState extends AbstractState{
     }
 }
 
-class MenuState extends ApplicationState{
+export class MenuState extends ApplicationState{
     constructor(stateMachine,containingDOMElement,menuSourceUrl){
         super(stateMachine,containingDOMElement);
         this._buttonElements = [];
@@ -92,7 +92,7 @@ class MenuState extends ApplicationState{
     enter = async () =>{
         //fetch and build menu if not already cached
         if(!this._menuBuilder){
-            this._menuBuilder = await buildMenu(this._url,SelectMenuBuilder());
+            this._menuBuilder = await buildMenu(this._url,new SelectMenuBuilder());
             this._buttonHandler = createMenuButtonHandlers(this._menuBuilder.getMenu(),this.stateMachine);
         }
         let menu = this._menuBuilder.getMenu()
@@ -116,8 +116,8 @@ class MenuState extends ApplicationState{
 async function buildMenu(sourceURL,menuBuilder){
     let response = await fetch(sourceURL);
     let menuData = await response.json();
-    Object.keys(menuData).forEach( key => {
-        menuBuilder.addOption(key,menuData[key]);
+    menuData.forEach( menuItem => {
+        menuBuilder.addOption(menuItem['id'],menuItem['title']);
 
     });
 
