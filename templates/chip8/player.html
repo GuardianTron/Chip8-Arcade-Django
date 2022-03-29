@@ -1,0 +1,37 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Chip 8 Emulator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="A javascript implementation of the Chip 8 Interpreter.">
+        <link href="{% static 'css/game.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <section>
+            <section id="player_screen">
+
+            </section>
+            <section id="d_pad">
+                <div id="dir_up"></div>
+                <div id="dir_left"></div>
+                <div id="dir_down"></div>
+                <div id="dir_right"></div>
+            </section>
+            <section id="start_select">
+                <div id="start"></div>
+                <div id="select"></div>
+            </section>
+            <section id="buttons">
+                <div id="button_a">A</div>
+                <div id="button_b">B</div>
+                <div id="button_c">C</div>
+                <div id="button_x">X</div>
+                <div id="button_y">Y</div>
+                <div id="button_z">Z</div>
+            </section>
+
+        </section>
+    </body>
+</html>
