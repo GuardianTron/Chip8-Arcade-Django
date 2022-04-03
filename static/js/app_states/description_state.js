@@ -1,4 +1,4 @@
-import { ApplicationState } from "../fsm.js";
+import { ApplicationState, StateMachine } from "../fsm.js";
 
 export class DescriptionState extends ApplicationState{
 
@@ -117,4 +117,15 @@ class DescriptionBuilder extends ElementBuilder{
 
 
 
+}
+
+function createButtonHandler(stateMachine,gameData){
+    if(! stateMachine instanceof StateMachine){
+        throw new TypeError('StateMachine instance required for first parameter.');
+    }
+    return e =>{
+        if(e.target.id = "start_button"){
+            stateMachine.changeState('game_state',gameData);
+        }
+    }
 }
