@@ -1,5 +1,6 @@
 "use strict";
-import { StateMachine, MenuState} from "./fsm.js";
+import { StateMachine } from "./fsm.js";
+import { MenuState } from "./app_states/menu_state.js";
 
 const fsm = new StateMachine();
 const menu = new MenuState(fsm,document.getElementById('player_screen'),'api/');
