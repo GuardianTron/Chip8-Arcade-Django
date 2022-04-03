@@ -86,7 +86,7 @@ export function createMenuButtonHandlers(menu,stateMachine){
                 break;
             case 'button_start':
                 let gameId = menu.getSelectedId();
-                stateMachine.changeState('description_state',{'id':gameId});
+                stateMachine.changeState('description_state',{game_id:gameId});
                 break;
         }
     };
