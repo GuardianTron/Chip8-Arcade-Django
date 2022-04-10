@@ -6,16 +6,22 @@ export class DescriptionState extends ApplicationState{
         super(stateMachine,containingDOMElement);
         this._games = new GameModel(url);
         this._descriptionBuilder = new DescriptionBuilder();
-        this.container.appendChild(this._descriptionBuilder.element);
+        this._buttonHandler = null;
+        
        }
 
     enter = async ({game_id = null}) => {
         const gameData = await this._games.fetch(game_id);
-        console.log(gameData);
         this._descriptionBuilder.titleText = gameData.title;
         this._descriptionBuilder.descriptionText = gameData.description;
-        
-        
+        this.container.appendChild(this._descriptionBuilder.element);
+        this._buttonHandler = createButtonHandler(gameData,this.stateMachine);
+        this.registerButtonHandler('click',this._buttonHandler);
+    }
+
+    exit = ()=>{
+        this.unregisterButtonHandler('click',this._buttonHandler);
+        this.container.removeChild(this._descriptionBuilder.element);
     }
     
 }
@@ -119,12 +125,12 @@ class DescriptionBuilder extends ElementBuilder{
 
 }
 
-function createButtonHandler(stateMachine,gameData){
+function createButtonHandler(gameData,stateMachine){
     if(! stateMachine instanceof StateMachine){
         throw new TypeError('StateMachine instance required for first parameter.');
     }
     return e =>{
-        if(e.target.id = "start_button"){
+        if(e.target.id = "button_start"){
             stateMachine.changeState('game_state',gameData);
         }
     }
