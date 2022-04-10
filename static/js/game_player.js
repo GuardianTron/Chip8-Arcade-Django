@@ -2,11 +2,13 @@
 import { StateMachine } from "./fsm.js";
 import { MenuState } from "./app_states/menu_state.js";
 import { DescriptionState } from "./app_states/description_state.js";
+import { GameState } from "./app_states/game_state.js";
 
 const fsm = new StateMachine();
 const containerElement = document.getElementById('player_screen');
 const menu = new MenuState(fsm,containerElement,'api/');
 const description = new DescriptionState(fsm,containerElement,'api/');
+const gamePlayer = new GameState(fsm,containerElement);
 
 const startSelect = document.getElementById('start_select');
 const dPad = document.getElementById('d_pad');
@@ -22,5 +24,6 @@ description.addButton(startSelect);
 //add states to state manchine
 fsm.addState('menu_state',menu);
 fsm.addState('description_state',description);
+fsm.addState('game_state',gamePlayer);
 //start in the menu state
 fsm.changeState('menu_state');
