@@ -81,5 +81,17 @@ export class ApplicationState extends AbstractState{
     get container(){
         return this._containingDOMElement;
     }
+
+    registerButtonHandler = (eventType,handlerFunction) =>{
+        this.buttons.forEach(button => {
+            button.addEventListener(eventType,handlerFunction);
+        });
+    }
+
+    unregisterButtonHandler = (eventType,handlerFunction) =>{
+        this.buttons.forEach(button =>{
+            button.removeEventListener(eventType,handlerFunction);
+        });
+    }
 }
 

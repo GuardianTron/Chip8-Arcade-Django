@@ -108,17 +108,13 @@ export class MenuState extends ApplicationState{
         }
         let menu = this._menuBuilder.getMenu()
         //wire event handlers for buttons
-        this.buttons.forEach(button =>{
-            button.addEventListener('click',this._buttonHandler);
-        });        
+        this.registerButtonHandler('click',this._buttonHandler);      
         this.container.appendChild(menu);
 
     }
 
     exit = ()=>{
-        this.buttons.forEach(button =>{
-            button.removeEventListener('click',this._buttonHandler);
-        });
+        this.unregisterButtonHandler('click',this._buttonHandler);
         this.container.removeChild(this._menuBuilder.getMenu());
         
     }
