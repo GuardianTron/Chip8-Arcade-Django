@@ -67,6 +67,15 @@ export class ApplicationState extends AbstractState{
     constructor(stateMachine,containingDOMElement){
         super(stateMachine);
         this._containingDOMElement = containingDOMElement;
+        this._buttonElements = []
+    }
+
+    addButton = buttonElement =>{
+        this._buttonElements.push(buttonElement);
+    }
+
+    get buttons(){
+        return this._buttonElements;
     }
 
     get container(){

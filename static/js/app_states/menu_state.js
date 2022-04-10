@@ -95,14 +95,9 @@ export function createMenuButtonHandlers(menu,stateMachine){
 export class MenuState extends ApplicationState{
     constructor(stateMachine,containingDOMElement,menuSourceUrl){
         super(stateMachine,containingDOMElement);
-        this._buttonElements = [];
         this._url = menuSourceUrl;
         this._menuBuilder = null;
         this._buttonHandler = null;
-    }
-
-    addButton = (buttonElement) =>{
-        this._buttonElements.push(buttonElement);
     }
 
     enter = async () =>{
@@ -113,7 +108,7 @@ export class MenuState extends ApplicationState{
         }
         let menu = this._menuBuilder.getMenu()
         //wire event handlers for buttons
-        this._buttonElements.forEach(button =>{
+        this.buttons.forEach(button =>{
             button.addEventListener('click',this._buttonHandler);
         });        
         this.container.appendChild(menu);
@@ -121,7 +116,7 @@ export class MenuState extends ApplicationState{
     }
 
     exit = ()=>{
-        this._buttonElements.forEach(button =>{
+        this.buttons.forEach(button =>{
             button.removeEventListener('click',this._buttonHandler);
         });
         this.container.removeChild(this._menuBuilder.getMenu());
