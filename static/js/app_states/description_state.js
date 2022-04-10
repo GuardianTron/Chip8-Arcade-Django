@@ -131,7 +131,7 @@ function createButtonHandler(gameData,stateMachine){
     }
     return e =>{
         if(e.target.id = "button_start"){
-            stateMachine.changeState('game_state',gameData);
+            stateMachine.changeState('game_state',{gameData:gameData});
         }
     }
 }
