@@ -46,7 +46,7 @@ function hexStringToBinBuffer(hexString){
     const buffer = new Uint8Array(hexString.length/2);
     //every two characters represents a byte.
     for(let i=0; i < hexString.length; i+=2){
-        let byteString = hexString.slice(i,i+1);
+        const byteString = hexString.slice(i,i+1);
         buffer[i/2] = parseInt(byteString,16);
         
     }
