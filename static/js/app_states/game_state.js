@@ -4,8 +4,8 @@ import { Chip8Emulator } from "../Chip-8-Emulator/chip8emulator.js";
 
 export class GameState extends ApplicationState{
 
-    constructor(stateMachine,containingDOMElement){
-        super(stateMachine,containingDOMElement);
+    constructor(containingDOMElement){
+        super(containingDOMElement);
         this._canvasElement = document.createElement('canvas');
         this._canvasElement.id = "game_canvas";
         this._emulator = new Chip8Emulator(this._canvasElement);

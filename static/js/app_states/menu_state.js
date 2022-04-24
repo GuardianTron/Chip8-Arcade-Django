@@ -93,8 +93,8 @@ export function createMenuButtonHandlers(menu,stateMachine){
 }
 
 export class MenuState extends ApplicationState{
-    constructor(stateMachine,containingDOMElement,menuSourceUrl){
-        super(stateMachine,containingDOMElement);
+    constructor(containingDOMElement,menuSourceUrl){
+        super(containingDOMElement);
         this._url = menuSourceUrl;
         this._menuBuilder = null;
         this._buttonHandler = null;

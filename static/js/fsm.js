@@ -2,15 +2,23 @@
 
 export class AbstractState{
 
-    constructor(stateMachine){
-        if(!stateMachine instanceof StateMachine){
-            throw new TypeError('Instance of class StateMachine required.')
-        }
-        this._fsm = stateMachine
+    constructor(){
+        this._fsm = null;
     }
 
     get stateMachine(){
         return this._fsm;
+    }
+
+    set stateMachine(stateMachine){
+        if(this._fsm !== null){
+            throw new Error("This state is around bound to a state machine.");
+        }
+        else if(!(stateMachine instanceof StateMachine)){
+            throw new Error("The state machine set was not an instance of StateMachine.");
+        }
+
+        this._fsm = stateMachine;
     }
 
     enter = async () =>{
@@ -36,7 +44,7 @@ export class StateMachine{
         if(!stateInstance instanceof AbstractState){
             throw new TypeError("An object of type State is required.");
         }
-
+        stateInstance.stateMachine = this;
         this._states.set(stateLabel,stateInstance);
 
 
@@ -64,8 +72,8 @@ export class StateMachine{
 
 export class ApplicationState extends AbstractState{
 
-    constructor(stateMachine,containingDOMElement){
-        super(stateMachine);
+    constructor(containingDOMElement){
+        super();
         this._containingDOMElement = containingDOMElement;
         this._buttonElements = [];
     }

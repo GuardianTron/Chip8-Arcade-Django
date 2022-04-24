@@ -2,8 +2,8 @@ import { ApplicationState, StateMachine } from "../fsm.js";
 
 export class DescriptionState extends ApplicationState{
 
-    constructor(stateMachine,containingDOMElement, url){
-        super(stateMachine,containingDOMElement);
+    constructor(containingDOMElement, url){
+        super(containingDOMElement);
         this._games = new GameModel(url);
         this._descriptionBuilder = new DescriptionBuilder();
         this._buttonHandler = null;

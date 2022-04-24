@@ -6,9 +6,9 @@ import { GameState } from "./app_states/game_state.js";
 
 const fsm = new StateMachine();
 const containerElement = document.getElementById('player_screen');
-const menu = new MenuState(fsm,containerElement,'api/');
-const description = new DescriptionState(fsm,containerElement,'api/');
-const gamePlayer = new GameState(fsm,containerElement);
+const menu = new MenuState(containerElement,'api/');
+const description = new DescriptionState(containerElement,'api/');
+const gamePlayer = new GameState(containerElement);
 
 const startSelect = document.getElementById('start_select');
 const dPad = document.getElementById('d_pad');
